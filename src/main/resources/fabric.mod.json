@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "optional_pickup",
+	"version": "${version}",
+	"name": "OptionalPickup",
+	"description": "Now you can choose whether items to pick up or not!",
+	"authors": [
+		"NightEpiphany"
+	],
+	"license": "MIT",
+	"icon": "assets/optional_pickup/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.moigferdsrte.optional_pickup.OptionalPickup"
+		],
+		"client": [
+			"com.moigferdsrte.optional_pickup.client.OptionalPickupClient"
+		],
+		"modmenu": [
+			"com.moigferdsrte.optional_pickup.compact.ModMenuEntryPoint"
+		]
+	},
+	"mixins": [
+		"optional_pickup.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cloth-config": "*"
+	}
+}
