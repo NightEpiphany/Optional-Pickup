@@ -11,13 +11,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MouseHandler.class)
 public class MouseHandlerMixin {
 	@Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
-	private void optional_pickup$scrollSelect(long window, double horizontal, double vertical, CallbackInfo ci) {
-		if (vertical == 0.0) {
+	private void optional_pickup$scrollSelect(long handle, double xoffset, double yoffset, CallbackInfo ci) {
+		if (yoffset == 0.0) {
 			return;
 		}
 
 		Minecraft minecraft = Minecraft.getInstance();
-		if (minecraft.player == null || minecraft.level == null || minecraft.screen != null) {
+		if (minecraft.player == null || minecraft.level == null || minecraft.gui.screen() != null) {
 			return;
 		}
 
@@ -32,7 +32,7 @@ public class MouseHandlerMixin {
 		if (state.getOptionsView().size() <= 1)
 			return;
 
-		if (state.scroll(vertical)) {
+		if (state.scroll(yoffset)) {
 			ci.cancel();
 		}
 	}

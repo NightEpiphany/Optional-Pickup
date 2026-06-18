@@ -8,19 +8,22 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class OptionalPickupClient implements ClientModInitializer {
-	private static final KeyMapping PICKUP_KEY = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+	private static final KeyMapping PICKUP_KEY = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 			"key.optional_pickup.pickup",
-			GLFW.GLFW_KEY_R,
-			"key.categories.optional_pickup"
+			82,
+			new KeyMapping.Category(
+					Identifier.fromNamespaceAndPath("optional_pickup", "key.categories.optional_pickup")
+			)
 	));
 
 	public static ConfigHolder<OptionalPickupConfig> configHolder;
@@ -42,7 +45,7 @@ public class OptionalPickupClient implements ClientModInitializer {
 	private void onEndClientTick(Minecraft minecraft) {
 		DropSelectionState.get().tick(minecraft);
 
-		Screen screen = minecraft.screen;
+		Screen screen = minecraft.gui.screen();
 		if (screen != null) {
 			return;
 		}

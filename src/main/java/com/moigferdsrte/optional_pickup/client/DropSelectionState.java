@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.TooltipContext;
@@ -105,7 +106,7 @@ public final class DropSelectionState {
 					continue;
 				}
 
-			ItemStack displayStack = group.keyStack.copyWithCount(1);
+				ItemStack displayStack = group.keyStack.copyWithCount(1);
 				Component displayName = computeDisplayName(minecraft, player, group.keyStack);
 
 				nextOptions.add(new DropOption(
@@ -323,59 +324,57 @@ public final class DropSelectionState {
 
 	private static DropCategory categorize(ItemStack stack) {
 		Item item = stack.getItem();
-        switch (item) {
-            case SwordItem ignored -> {
-                return DropCategory.COMBAT;
-            }
-            case TieredItem ignored -> {
-                return DropCategory.TOOLS;
-            }
-            case ArmorItem ignored -> {
-                return DropCategory.ARMOR;
-            }
-            case BlockItem ignored -> {
-                return DropCategory.BLOCKS;
-            }
-            default -> {
-            }
-        }
-        if (stack.getComponents().has(DataComponents.FOOD)
-				|| item == Items.POTION
-				|| item == Items.SPLASH_POTION
-				|| item == Items.LINGERING_POTION
-				|| item == Items.SUSPICIOUS_STEW
-				|| item == Items.MILK_BUCKET
-				|| item == Items.HONEY_BOTTLE) {
-			return DropCategory.FOOD;
+		if (item.getDefaultInstance().is(ItemTags.SWORDS)) {
+			return DropCategory.COMBAT;
+		} else if (!item.getDefaultInstance().is(ItemTags.PICKAXES) && !item.getDefaultInstance().is(ItemTags.AXES) && !item.getDefaultInstance().is(ItemTags.SHOVELS) && !item.getDefaultInstance().is(ItemTags.HOES)) {
+			if (item.getDefaultInstance().is(ItemTags.TRIMMABLE_ARMOR)) {
+				return DropCategory.ARMOR;
+			} else if (item instanceof BlockItem) {
+				return DropCategory.BLOCKS;
+			} else {
+				return !stack.getComponents().has(DataComponents.FOOD) && item != Items.POTION && item != Items.SPLASH_POTION && item != Items.LINGERING_POTION && item != Items.SUSPICIOUS_STEW && item != Items.MILK_BUCKET && item != Items.HONEY_BOTTLE ? DropCategory.MISC : DropCategory.FOOD;
+			}
+		} else {
+			return DropCategory.TOOLS;
 		}
-		return DropCategory.MISC;
 	}
 
 	private static Component computeDisplayName(Minecraft minecraft, LocalPlayer player, ItemStack keyStack) {
+		Component hoverName = keyStack.getHoverName();
 		Item item = keyStack.getItem();
 		if (minecraft.level == null) {
-			return keyStack.getHoverName();
-		}
-		if (
-				item instanceof HangingEntityItem || item instanceof EnchantedBookItem || item instanceof BannerPatternItem || item instanceof InstrumentItem || item instanceof SuspiciousStewItem ||
-				OverwrittenJudge.isHoverTextOverridden(item.getClass())
-		) {
-			List<Component> tooltip = keyStack.getTooltipLines(TooltipContext.of(minecraft.level), player, TooltipFlag.NORMAL);
-			if (tooltip.size() >= 2) {
-				if (item == Items.PAINTING) {
-					return tooltip.get(1);
-				}
+			return hoverName;
+		} else {
+			if (shouldUseTooltipDetailName(item, keyStack)) {
+				List<Component> tooltip = keyStack.getTooltipLines(TooltipContext.of(minecraft.level), player, TooltipFlag.NORMAL);
+				if (tooltip.size() >= 2) {
+					if (item == Items.PAINTING) {
+						return (Component)tooltip.get(1);
+					}
 
-				Component first = tooltip.get(1);
-				int extra = tooltip.size() - 2;
-				if (extra > 0) {
-					return Component.empty().append(first).append(Component.literal(" +" + extra));
+					Component first = (Component)tooltip.get(1);
+					int extra = tooltip.size() - 2;
+					if (extra > 0) {
+						return Component.empty().append(first).append(Component.literal(" +" + extra));
+					}
+
+					return first;
 				}
-				return first;
 			}
-		}
 
-		return keyStack.getHoverName();
+			return hoverName;
+		}
+	}
+
+	private static boolean shouldUseTooltipDetailName(Item item, ItemStack stack) {
+		return item instanceof HangingEntityItem
+				|| stack.has(DataComponents.ENCHANTMENTS)
+				|| stack.has(DataComponents.STORED_ENCHANTMENTS)
+				|| stack.has(DataComponents.PROVIDES_BANNER_PATTERNS)
+				|| stack.has(DataComponents.SUSPICIOUS_STEW_EFFECTS)
+				|| stack.has(DataComponents.INSTRUMENT)
+				|| item instanceof InstrumentItem
+				|| OverwrittenJudge.isHoverTextOverridden(item.getClass());
 	}
 
 	private static final class StackKey {

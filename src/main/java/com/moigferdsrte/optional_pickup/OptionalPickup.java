@@ -19,7 +19,7 @@ public class OptionalPickup implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		PayloadTypeRegistry.playC2S().register(PickupRequestC2SPayload.TYPE, PickupRequestC2SPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(PickupRequestC2SPayload.TYPE, PickupRequestC2SPayload.CODEC);
 
 		ServerPlayNetworking.registerGlobalReceiver(PickupRequestC2SPayload.TYPE, (payload, context) -> {
 			ServerPlayer player = context.player();

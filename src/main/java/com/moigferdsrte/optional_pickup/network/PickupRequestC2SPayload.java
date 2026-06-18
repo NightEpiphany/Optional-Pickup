@@ -5,10 +5,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.NonNull;
 
 public record PickupRequestC2SPayload(int entityId) implements CustomPacketPayload {
-	public static final ResourceLocation PICKUP_REQUEST_ID = ResourceLocation.fromNamespaceAndPath(OptionalPickup.MOD_ID, "pickup_request");
+	public static final Identifier PICKUP_REQUEST_ID = Identifier.fromNamespaceAndPath(OptionalPickup.MOD_ID, "pickup_request");
 	public static final Type<PickupRequestC2SPayload> TYPE = new Type<>(PICKUP_REQUEST_ID);
 	public static final StreamCodec<RegistryFriendlyByteBuf, PickupRequestC2SPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT,
@@ -17,7 +18,7 @@ public record PickupRequestC2SPayload(int entityId) implements CustomPacketPaylo
 	);
 
 	@Override
-	public Type<? extends CustomPacketPayload> type() {
+	public @NonNull Type<? extends CustomPacketPayload> type() {
 		return TYPE;
 	}
 }
