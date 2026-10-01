@@ -1,6 +1,7 @@
 {
   "key.optional_pickup.pickup": "Pick up selected item",
   "key.categories.optional_pickup": "Optional Pickup",
+  "key.category.optional_pickup.key.categories.optional_pickup": "Optional Pickup",
   "text.autoconfig.optional_pickup.title":"Optional Pickup",
   "text.autoconfig.optional_pickup.option.offsetX.@Tooltip":"X position (0 = right edge, 100 = left edge)",
   "text.autoconfig.optional_pickup.option.offsetY.@Tooltip":"The item list Y render offset",

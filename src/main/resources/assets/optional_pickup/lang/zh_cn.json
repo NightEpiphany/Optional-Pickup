@@ -2,6 +2,7 @@
   "key.optional_pickup.pickup": "拾取选中物品",
   "key.categories.optional_pickup": "可选拾取",
   "text.autoconfig.optional_pickup.title": "可选拾取",
+  "key.category.optional_pickup.key.categories.optional_pickup": "可选拾取",
   "text.autoconfig.optional_pickup.option.offsetX.@Tooltip": "X 位置（0=最右侧，100=最左侧）",
   "text.autoconfig.optional_pickup.option.offsetY.@Tooltip": "列表 Y 轴渲染偏移",
   "text.autoconfig.optional_pickup.option.offsetX": "X 位置",

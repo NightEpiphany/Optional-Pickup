@@ -14,13 +14,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class OptionalPickupClient implements ClientModInitializer {
 	private static final KeyMapping PICKUP_KEY = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 			"key.optional_pickup.pickup",
-			82,
+			21,
 			new KeyMapping.Category(
 					Identifier.fromNamespaceAndPath("optional_pickup", "key.categories.optional_pickup")
 			)
