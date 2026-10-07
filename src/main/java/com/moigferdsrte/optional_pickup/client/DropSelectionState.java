@@ -1,7 +1,6 @@
 package com.moigferdsrte.optional_pickup.client;
 
 import com.moigferdsrte.optional_pickup.network.PickupRequestC2SPayload;
-import com.moigferdsrte.optional_pickup.util.OverwrittenJudge;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -345,14 +344,14 @@ public final class DropSelectionState {
 		if (minecraft.level == null) {
 			return hoverName;
 		} else {
-			if (shouldUseTooltipDetailName(item, keyStack)) {
+			if (OptionalPickupClient.shouldPreferTooltip(item)) {
 				List<Component> tooltip = keyStack.getTooltipLines(TooltipContext.of(minecraft.level), player, TooltipFlag.NORMAL);
 				if (tooltip.size() >= 2) {
 					if (item == Items.PAINTING) {
-						return (Component)tooltip.get(1);
+						return tooltip.get(1);
 					}
 
-					Component first = (Component)tooltip.get(1);
+					Component first = tooltip.get(1);
 					int extra = tooltip.size() - 2;
 					if (extra > 0) {
 						return Component.empty().append(first).append(Component.literal(" +" + extra));
@@ -364,17 +363,6 @@ public final class DropSelectionState {
 
 			return hoverName;
 		}
-	}
-
-	private static boolean shouldUseTooltipDetailName(Item item, ItemStack stack) {
-		return item instanceof HangingEntityItem
-				|| stack.has(DataComponents.ENCHANTMENTS)
-				|| stack.has(DataComponents.STORED_ENCHANTMENTS)
-				|| stack.has(DataComponents.PROVIDES_BANNER_PATTERNS)
-				|| stack.has(DataComponents.SUSPICIOUS_STEW_EFFECTS)
-				|| stack.has(DataComponents.INSTRUMENT)
-				|| item instanceof InstrumentItem
-				|| OverwrittenJudge.isHoverTextOverridden(item.getClass());
 	}
 
 	private static final class StackKey {

@@ -6,5 +6,7 @@
   "text.autoconfig.optional_pickup.option.offsetX.@Tooltip":"X position (0 = right edge, 100 = left edge)",
   "text.autoconfig.optional_pickup.option.offsetY.@Tooltip":"The item list Y render offset",
   "text.autoconfig.optional_pickup.option.offsetX":"X position",
-  "text.autoconfig.optional_pickup.option.offsetY":"Y offset"
+  "text.autoconfig.optional_pickup.option.offsetY":"Y offset",
+  "text.autoconfig.optional_pickup.option.tooltipPriorityItems": "Tooltip-priority items",
+  "text.autoconfig.optional_pickup.option.tooltipPriorityItems.@Tooltip": "Enter item IDs, such as minecraft:enchanted_book or mod_id:item_id. Listed items show their additional tooltip first, falling back to their name if no detail is available. Other items show their name. Clear the list to disable tooltip priority."
 }

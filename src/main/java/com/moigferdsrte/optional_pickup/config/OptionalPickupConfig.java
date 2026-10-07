@@ -1,10 +1,14 @@
 package com.moigferdsrte.optional_pickup.config;
+
 import com.moigferdsrte.optional_pickup.OptionalPickup;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @Config(name = OptionalPickup.MOD_ID)
@@ -15,4 +19,12 @@ public class OptionalPickupConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = -30, max = 60)
     @ConfigEntry.Gui.Tooltip
     public int offsetY = 0;
+
+    @ConfigEntry.Gui.Tooltip
+    public List<String> tooltipPriorityItems = new ArrayList<>(List.of(
+            "minecraft:enchanted_book",
+            "minecraft:potion",
+            "minecraft:splash_potion",
+            "minecraft:lingering_potion"
+    ));
 }

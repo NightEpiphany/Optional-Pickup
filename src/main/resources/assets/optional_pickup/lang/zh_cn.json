@@ -6,5 +6,7 @@
   "text.autoconfig.optional_pickup.option.offsetX.@Tooltip": "X 位置（0=最右侧，100=最左侧）",
   "text.autoconfig.optional_pickup.option.offsetY.@Tooltip": "列表 Y 轴渲染偏移",
   "text.autoconfig.optional_pickup.option.offsetX": "X 位置",
-  "text.autoconfig.optional_pickup.option.offsetY": "Y 偏移"
+  "text.autoconfig.optional_pickup.option.offsetY": "Y 偏移",
+  "text.autoconfig.optional_pickup.option.tooltipPriorityItems": "Tooltip 优先物品",
+  "text.autoconfig.optional_pickup.option.tooltipPriorityItems.@Tooltip": "填写物品 ID（例如 minecraft:enchanted_book 或 模组ID:物品ID）。列表中的物品优先显示附加 Tooltip，没有附加 Tooltip 时显示名称；其他物品显示名称。清空列表可禁用 Tooltip 优先。"
 }
